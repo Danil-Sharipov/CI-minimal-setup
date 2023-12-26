@@ -1,0 +1,14 @@
+vm1 ansible_host=172.26.64.1 ansible_port=2222 ansible_connection=ssh ansible_user=vagrant ansible_ssh_pass=vagrant
+vm2 ansible_host=172.26.64.1 ansible_port=2200 ansible_connection=ssh ansible_user=vagrant ansible_ssh_pass=vagrant
+vm3 ansible_host=172.26.64.1 ansible_port=2201 ansible_connection=ssh ansible_user=vagrant ansible_ssh_pass=vagrant
+
+[worker_nodes]
+vm2
+vm3
+
+[master_nodes]
+vm1
+
+[all_nodes:children]
+master_nodes
+worker_nodes
