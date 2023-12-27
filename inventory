@@ -4,11 +4,17 @@ vm3 ansible_host=172.26.64.1 ansible_port=2201 ansible_connection=ssh ansible_us
 
 [worker_nodes]
 vm2
+
+[db_nodes]
 vm3
+
+[k3s_nodes:children]
+master_nodes
+worker_nodes
 
 [master_nodes]
 vm1
 
 [all_nodes:children]
-master_nodes
-worker_nodes
+k3s_nodes
+db_nodes

@@ -1,13 +1,4 @@
 ---
-#- name: 'Deploy minio from template'
-#  become: false
-#  kubernetes.core.helm:
-#    name:
-#    chart_ref: minio
-#    chart_version: '{{ minio_version }}'
-#    values: "{{ lookup('template', 'minio.yaml') | from_yaml }}"
-#    release_namespace: minio
-#    create_namespace: true
 - name: 'Add minio-operator chart repo'
   kubernetes.core.helm_repository:
     name: minio-operator
@@ -15,9 +6,14 @@
 
 - name: 'Deploy minio by helm chart'
   kubernetes.core.helm:
-    name: operator
-    chart_ref: minio-operator/operator
-    namespace: minio-operator
+    name: s3_minio
+    chart_ref: minio-operator/tenant
+    namespace: s3_namespace
     create_namespace: true
+    values: "{{ lookup('template', 'minio.yaml') | from_yaml }}"
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+- name: 'Port-forward in detached'
+  shell:
+    cmd: "nohup kubectl port-forward svc/console -n minio-operator 9000:9000 </dev/null >/dev/null 2>&1 &"

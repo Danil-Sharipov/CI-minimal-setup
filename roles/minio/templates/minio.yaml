@@ -1,20 +1,15 @@
-service:
-  type: NodePort
-  ports:
-    api: 9000
-    console: 9001
-  nodePorts:
-    api: "32224"
-    console: "32225"
-
-#Указываем размер PVC под Minio
-persistence:
-  size: 8Gi
-
-#Данные входа в Minio
-auth:
-  rootUser: {{ rootUser }}
-  rootPassword: {{ rootPassword }}
-
-#Бакет по умолчанию
-defaultBuckets: {{ defaultBuckets }}
+image:
+  repository: quay.io/minio/minio
+  tag: RELEASE.2023-10-07T15-07-38Z
+  pullPolicy: IfNotPresent
+buckets:
+  - name: '{{ defaultBuckets }}'
+    objectLock: false
+    region: us-east-1
+#users:
+#  CONSOLE_ACCESS_KEY: '{{ rootUser }}'
+#  CONSOLE_SECRET_KEY: '{{ rootPassword }}'
+stringData:
+  config.env: | -
+    export MINIO_ROOT_USER='{{ rootUser }}'
+    export MINIO_ROOT_PASSWORD='{{ rootPassword }}' 

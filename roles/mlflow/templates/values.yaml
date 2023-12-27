@@ -1,0 +1,20 @@
+backendStore:
+  databaseMigration: true
+  postgres:
+    enabled: true
+    host: "{{ host }}"
+    port: 5432
+    database: "{{ db_name }}"
+    user: "{{ db_user }}"
+    password: "{{ db_password }}"
+artifactRoot:
+  s3:
+    enabled: true
+    bucket: '{{ s3_bucket }}'
+    awsAccessKeyId: '{{ s3_user }}'
+    awsSecretAccessKey: '{{ s3_password }}'
+# correct this
+extraEnvVars:
+  MLFLOW_S3_ENDPOINT_URL: http://localhost:9000
+serviceMonitor:
+  enabled: true

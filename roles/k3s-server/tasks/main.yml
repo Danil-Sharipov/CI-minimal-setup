@@ -38,7 +38,7 @@
       become: false
       command: whoami
       register: user
-    - name: 'Move help to bin'
+    - name: 'Move helm to bin'
       copy:
         src: "{{ tmp_dir.path }}/linux-amd64/helm"
         dest: /usr/local/bin
@@ -60,6 +60,9 @@
         src: "{{ tmp_dir.path }}/JMT.txt"
         dest: ./token/
         flat: true
+    - name: 'Install mlflow'
+      include_role:
+        name: mlflow
 
 
 

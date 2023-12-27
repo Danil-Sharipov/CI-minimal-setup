@@ -2,4 +2,3 @@
 rootUser: 'mlflow'
 rootPassword: "mlflow"
 defaultBuckets: "mlflow"
-minio_version: "12.6.4"

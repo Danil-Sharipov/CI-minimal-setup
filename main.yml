@@ -1,6 +1,13 @@
 ---
-- hosts: vm3
+#- hosts: vm3
+#  become: true
+#  gather_facts: false
+#  roles:
+#    - postgresql
+- hosts: vm1
   become: true
   gather_facts: false
   roles:
-    - k3s-server
+    - minio
+#    - k3s-server
+

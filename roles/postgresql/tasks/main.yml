@@ -1,0 +1,55 @@
+---
+- name: Install necessary packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - postgresql
+      - postgresql-contrib
+      - python3-pip
+- name: Enable and check postgres service
+  systemd:
+    name: postgresql.service
+    state: started
+    enabled: true
+- name: Install Python packages
+  pip:
+    name: '{{ lib }}'
+    state: present
+  vars:
+    lib:
+      - psycopg2-binary
+- name: Copy new conf file
+  copy:
+    src: postgresql.conf
+    dest: /etc/postgresql/12/main/postgresql.conf
+    force: true
+    mode: 0644
+- name: Copy new conf file
+  copy:
+    src: pg_hba.conf
+    dest: /etc/postgresql/12/main/pg_hba.conf
+    force: true
+    mode: 0644
+- name: Enable and check postgres service
+  systemd:
+    daemon_reload: true
+    name: postgresql.service
+    state: restarted
+    enabled: true
+- name: "Create app database"
+  postgresql_db:
+    state: present
+    name: "{{ db_name }}"
+  become: true
+#  become_user: postgres
+#  become_method: enable
+
+- name: "Create db user"
+  postgresql_user:
+    state: present
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+  become: true

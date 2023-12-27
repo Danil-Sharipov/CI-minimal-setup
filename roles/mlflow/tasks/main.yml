@@ -1,0 +1,15 @@
+---
+- name: 'Add mlflow-operator chart repo'
+  kubernetes.core.helm_repository:
+    name: community-charts
+    repo_url: https://community-charts.github.io/helm-charts
+
+- name: 'Deploy mlflow by helm chart'
+  kubernetes.core.helm:
+    name: mlflow
+    chart_ref: community-charts/mlflow
+    namespace: mlflow_namespace
+    create_namespace: true
+    values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml

@@ -1,0 +1,4 @@
+---
+db_user: mlflow
+db_password: mlflow
+db_name: mlflow
