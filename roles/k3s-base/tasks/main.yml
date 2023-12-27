@@ -1,0 +1,22 @@
+---
+- name: Install necessary packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg2
+      - net-tools
+      - jq
+- name: 'Download k3s'
+  get_url:
+    url: https://get.k3s.io/
+    dest: /usr/local/bin/k3s-install.sh
+    owner: root
+    group: root
+    mode: 0755

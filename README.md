@@ -1,3 +1,6 @@
 # First_in_MLOps
 ## Разворачиваем k3s
-Простейший спопособ это воспользоваться официальным playbook
+Установка collections
+и запуск
+sudo kubectl port-forward svc/console -n minio-operator 9090:9090
+

@@ -1,0 +1,70 @@
+---
+- name: 'Download k3s binary'
+  shell:
+    cmd: /usr/local/bin/k3s-install.sh
+  environment:
+    INSTALL_K3S_SKIP_START: "true"
+  changed_when: true
+
+- name: 'Init cluster'
+  template:
+    src: k3s.service.j2
+    dest: '{{ systemd_dir }}/k3s.service'
+    owner: root
+    group: root
+    mode: 0644
+    force: true
+- name: Enable and check K3s service
+  systemd:
+    name: k3s
+    daemon_reload: true
+    state: started
+    enabled: true
+
+- name: 'Create temporary file'
+  tempfile:
+    state: directory
+    suffix: tmp
+  register: tmp_dir
+
+- name: 'Helm install'
+  block:
+    - name: "Download and extract helm"
+      unarchive:
+        src: "https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+        dest: "{{ tmp_dir.path }}"
+        remote_src: yes
+    - name: 'Get name of user'
+      become: false
+      command: whoami
+      register: user
+    - name: 'Move help to bin'
+      copy:
+        src: "{{ tmp_dir.path }}/linux-amd64/helm"
+        dest: /usr/local/bin
+        mode: 0755
+        remote_src: yes
+        owner: '{{ user.stdout }}'
+        group: '{{ user.stdout }}'
+
+- name: 'Install everything by helm'
+  block:
+    - name: 'Install minio'
+      include_role:
+        name: minio
+    - name: 'Get JMT.token'
+      shell:
+        cmd: kubectl get secret/console-sa-secret -n minio-operator -o json | jq -r ".data.token" | base64 -d >> '{{ tmp_dir.path }}'/JMT.txt
+    - name: 'Copy to local host'
+      fetch:
+        src: "{{ tmp_dir.path }}/JMT.txt"
+        dest: ./token/
+        flat: true
+
+
+
+- name: 'Remove unnecessary file'
+  file:
+    state: absent
+    path: '{{ tmp_dir.path }}'
+

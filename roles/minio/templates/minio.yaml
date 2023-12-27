@@ -1,0 +1,20 @@
+service:
+  type: NodePort
+  ports:
+    api: 9000
+    console: 9001
+  nodePorts:
+    api: "32224"
+    console: "32225"
+
+#Указываем размер PVC под Minio
+persistence:
+  size: 8Gi
+
+#Данные входа в Minio
+auth:
+  rootUser: {{ rootUser }}
+  rootPassword: {{ rootPassword }}
+
+#Бакет по умолчанию
+defaultBuckets: {{ defaultBuckets }}

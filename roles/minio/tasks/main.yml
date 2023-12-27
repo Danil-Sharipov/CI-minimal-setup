@@ -1,0 +1,23 @@
+---
+#- name: 'Deploy minio from template'
+#  become: false
+#  kubernetes.core.helm:
+#    name:
+#    chart_ref: minio
+#    chart_version: '{{ minio_version }}'
+#    values: "{{ lookup('template', 'minio.yaml') | from_yaml }}"
+#    release_namespace: minio
+#    create_namespace: true
+- name: 'Add minio-operator chart repo'
+  kubernetes.core.helm_repository:
+    name: minio-operator
+    repo_url: https://operator.min.io
+
+- name: 'Deploy minio by helm chart'
+  kubernetes.core.helm:
+    name: operator
+    chart_ref: minio-operator/operator
+    namespace: minio-operator
+    create_namespace: true
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
