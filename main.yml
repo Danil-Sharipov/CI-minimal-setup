@@ -8,6 +8,6 @@
   become: true
   gather_facts: false
   roles:
-    - minio
-#    - k3s-server
+    - k3s-server
+#    - minio
 

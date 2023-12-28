@@ -1,0 +1,25 @@
+tenant:
+  buckets:
+    - name: {{ defaultBuckets }}
+      CONSOLE_ACCESS_KEY: accesskey
+      CONSOLE_SECRET_KEY: secretkey
+
+ingress:
+  api:
+    enabled: false
+    ingressClassName: ""
+    labels: { }
+    annotations: { }
+    tls: [ ]
+    host: minio.local
+    path: /
+    pathType: Prefix
+  console:
+    enabled: false
+    ingressClassName: ""
+    labels: { }
+    annotations: { }
+    tls: [ ]
+    host: minio-console.local
+    path: /
+    pathType: Prefix

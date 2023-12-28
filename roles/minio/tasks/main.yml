@@ -2,18 +2,22 @@
 - name: 'Add minio-operator chart repo'
   kubernetes.core.helm_repository:
     name: minio-operator
-    repo_url: https://operator.min.io
-
+    repo_url: https://operator.min.io/
+    force_update: true
 - name: 'Deploy minio by helm chart'
   kubernetes.core.helm:
-    name: s3_minio
-    chart_ref: minio-operator/tenant
-    namespace: s3_namespace
+    name: operator
+    chart_ref: minio-operator/operator
+    namespace: minio-operator
     create_namespace: true
-    values: "{{ lookup('template', 'minio.yaml') | from_yaml }}"
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-
-- name: 'Port-forward in detached'
-  shell:
-    cmd: "nohup kubectl port-forward svc/console -n minio-operator 9000:9000 </dev/null >/dev/null 2>&1 &"
+- name: 'Deploy minio tenant'
+  kubernetes.core.helm:
+    name: tenant
+    chart_ref: minio-operator/tenant
+    namespace: tenant-ns
+    create_namespace: true
+    values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
