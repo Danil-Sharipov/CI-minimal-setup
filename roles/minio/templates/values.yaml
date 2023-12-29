@@ -3,7 +3,7 @@ secrets:
   accessKey: "{{ rootUser }}"
   secretKey: "{{ rootPassword }}"
 tenant:
-  buckets:
+  buckets:  
     - name: {{ defaultBuckets }}
   pools:
     - servers: 1

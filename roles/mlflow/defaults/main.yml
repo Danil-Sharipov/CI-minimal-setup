@@ -2,7 +2,7 @@
 db_user: mlflow
 db_password: mlflow
 db_name: mlflow
-s3_user: mlflow
-s3_password: mlflow
-s3_bucket: mlflow
+s3_user: CxrzoH4Ye0Cgiwm1znpp
+s3_password: frASzoho4X76UbqWSIw7GHuTbQ5fmKT2sv3Qftml
+s3_bucket: mlflow-bucket
 host: 192.168.56.12

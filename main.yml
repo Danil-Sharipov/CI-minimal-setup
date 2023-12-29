@@ -9,10 +9,10 @@
 #  gather_facts: false
 #  roles:
 #    - k3s-base
-- hosts: master_nodes
-  become: true
-  gather_facts: false
-  roles:
-    - k3s-server
-    - minio
-    - mlflow
+#- hosts: master_nodes
+#  become: true
+#  gather_facts: false
+#  roles:
+##    - k3s-server
+#    - minio
+##    - mlflow
