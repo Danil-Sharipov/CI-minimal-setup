@@ -1,4 +1,7 @@
 ---
+#- name: Disable UFW
+#  community.general.ufw:
+#    state: disabled
 - name: Install necessary packages
   apt:
     name: "{{ packages }}"

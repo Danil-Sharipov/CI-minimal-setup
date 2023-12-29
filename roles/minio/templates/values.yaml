@@ -1,25 +1,28 @@
+secrets:
+  name: myminio-env-configuration
+  accessKey: minio
+  secretKey: minio123
 tenant:
   buckets:
     - name: {{ defaultBuckets }}
-      CONSOLE_ACCESS_KEY: accesskey
-      CONSOLE_SECRET_KEY: secretkey
-
+  pools:
+    - servers: 1
+      name: pool-0
+      volumesPerServer: 1
+      size: 1Gi
+      storageClassName: local-path
 ingress:
   api:
     enabled: false
-    ingressClassName: ""
-    labels: { }
-    annotations: { }
-    tls: [ ]
-    host: minio.local
-    path: /
+    host: minio.com
+    path: /api
     pathType: Prefix
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "false"
   console:
-    enabled: false
-    ingressClassName: ""
-    labels: { }
-    annotations: { }
-    tls: [ ]
-    host: minio-console.local
-    path: /
+    enabled: true
+    host: minio-console.com
+    path: /console
     pathType: Prefix
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "false"
