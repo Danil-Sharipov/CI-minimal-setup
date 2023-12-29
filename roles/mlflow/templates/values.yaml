@@ -15,6 +15,6 @@ artifactRoot:
     awsSecretAccessKey: '{{ s3_password }}'
 # correct this
 extraEnvVars:
-  MLFLOW_S3_ENDPOINT_URL: http://localhost:9000
+  MLFLOW_S3_ENDPOINT_URL: http://minio.com/api
 serviceMonitor:
   enabled: true

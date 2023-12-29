@@ -47,27 +47,8 @@
         owner: '{{ user.stdout }}'
         group: '{{ user.stdout }}'
 
-- name: 'Install everything by helm'
-  block:
-    - name: 'Install minio'
-      include_role:
-        name: minio
-#    - name: 'Get JMT.token'
-#      shell:
-#        cmd: kubectl get secret/console-sa-secret -n minio-operator -o json | jq -r ".data.token" | base64 -d >> '{{ tmp_dir.path }}'/JMT.txt
-#    - name: 'Copy to local host'
-#      fetch:
-#        src: "{{ tmp_dir.path }}/JMT.txt"
-#        dest: ./token/
-#        flat: true
-#    - name: 'Install mlflow'
-#      include_role:
-#        name: mlflow
-
-#
-#
-#- name: 'Remove unnecessary file'
-#  file:
-#    state: absent
-#    path: '{{ tmp_dir.path }}'
+    - name: 'Remove unnecessary file'
+      file:
+        state: absent
+        path: '{{ tmp_dir.path }}'
 
