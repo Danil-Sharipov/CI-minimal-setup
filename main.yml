@@ -1,6 +1,6 @@
 ---
-- hosts: vm3
+- hosts: vm2
   become: true
   gather_facts: false
   roles:
-    - minio
+    - k3s-server

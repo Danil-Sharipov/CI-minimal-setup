@@ -1,25 +1,48 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    globalArguments:
+    - "--serversTransport.insecureSkipVerify=true"
+    logs:
+      access:
+        enabled: true
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: myminio
+  name: myminio-console
   namespace: tenant-ns
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  ingressClassName: nginx
   rules:
-    - host: minio.local
+    - host: minio.com
       http:
         paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: minio
-                port:
-                  name: http
           - path: /console
             pathType: Prefix
             backend:
               service:
                 name: myminio-console
                 port:
-                  name: http
+                  number: 9443
+
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 443
+
+          - path: /hl
+            pathType: Prefix
+            backend:
+              service:
+                name: myminio-hl
+                port:
+                  number: 9000

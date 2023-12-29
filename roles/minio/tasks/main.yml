@@ -23,6 +23,18 @@
     force: true
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+- copy:
+    src: ingress.yaml
+    dest: /tmp/ing.yaml
+- name: 'Apply manifest to the cluster'
+  kubernetes.core.k8s:
+    state: present
+    src: /tmp/ing.yaml
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+- file:
+    state: absent
+    path: /tmp/ing.yml
 - name: 'Update /etc/host'
   block:
     - pause:
@@ -34,8 +46,5 @@
         insertbefore: BOF
         path: /etc/hosts
         line: '{{ temp_var.stdout }}'
-    - command:
-        cmd: cat /etc/hosts
-    - command:
-        cmd: curl http://minio-console.com/console
+
 #    # check if all pod is pending or not

@@ -11,18 +11,22 @@ tenant:
       volumesPerServer: 1
       size: 1Gi
       storageClassName: local-path
-ingress:
-  api:
-    enabled: false
-    host: minio.com
-    path: /api
-    pathType: Prefix
-    annotations:
-      ingress.kubernetes.io/ssl-redirect: "false"
-  console:
+  metrics:
     enabled: true
-    host: minio-console.com
-    path: /console
-    pathType: Prefix
-    annotations:
-      ingress.kubernetes.io/ssl-redirect: "false"
+    port: 9000
+    protocol: http
+#ingress:
+#  api:
+#    enabled: true
+#    host: minio.com
+#    path: /api
+#    pathType: Prefix
+#    annotations:
+#      ingress.kubernetes.io/ssl-redirect: "false"
+#  console:
+#    enabled: false
+#    host: minio-console.com
+#    path: /console
+#    pathType: Prefix
+#    annotations:
+#      ingress.kubernetes.io/ssl-redirect: "false"

@@ -16,6 +16,13 @@
       - gnupg2
       - net-tools
       - jq
+      - python3-pip
+- name: install pre-requisites
+  pip:
+    name:
+      - openshift
+      - pyyaml
+      - kubernetes
 - name: 'Download k3s'
   get_url:
     url: https://get.k3s.io/
