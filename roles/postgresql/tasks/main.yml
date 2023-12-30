@@ -22,18 +22,21 @@
     lib:
       - psycopg2-binary
 - name: Copy new conf file
+  register: check1
   copy:
     src: postgresql.conf
     dest: /etc/postgresql/12/main/postgresql.conf
     force: true
     mode: 0644
 - name: Copy new conf file
+  register: check2
   copy:
     src: pg_hba.conf
     dest: /etc/postgresql/12/main/pg_hba.conf
     force: true
     mode: 0644
 - name: Enable and check postgres service
+  when: check1.changed or check2.changed
   systemd:
     daemon_reload: true
     name: postgresql.service

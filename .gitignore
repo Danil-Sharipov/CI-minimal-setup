@@ -3,6 +3,5 @@
 /.vagrant/
 /just-for-me.md
 /terraform/.terraform/
-/terraform/.terraform.lock.hcl
-token/JMT.txt
 /venv/
+/for-debug/
