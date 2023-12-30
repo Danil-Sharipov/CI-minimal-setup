@@ -37,14 +37,7 @@
     path: /tmp/ing.yml
 - name: 'Update /etc/host'
   block:
-    - pause:
-        minutes: 1
-    - shell:
-        cmd: "kubectl get ing -n tenant-ns | grep -e myminio-console -e myminio | awk '{print $4, $3}'"
-      register: temp_var
     - lineinfile:
         insertbefore: BOF
         path: /etc/hosts
-        line: '{{ temp_var.stdout }}'
-
-#    # check if all pod is pending or not
+        line: "192.168.56.10 minio.com"

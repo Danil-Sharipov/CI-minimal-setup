@@ -5,3 +5,4 @@
 /terraform/.terraform/
 /terraform/.terraform.lock.hcl
 token/JMT.txt
+/venv/
