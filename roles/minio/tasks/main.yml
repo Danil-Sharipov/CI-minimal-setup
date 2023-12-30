@@ -3,7 +3,6 @@
   kubernetes.core.helm_repository:
     name: minio-operator
     repo_url: https://operator.min.io/
-    force_update: true
 - name: 'Deploy minio by helm chart'
   kubernetes.core.helm:
     name: operator
@@ -19,8 +18,8 @@
     chart_ref: minio-operator/tenant
     namespace: tenant-ns
     create_namespace: true
-    values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
     force: true
+    values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 

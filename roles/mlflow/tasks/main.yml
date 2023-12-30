@@ -11,6 +11,7 @@
     chart_ref: community-charts/mlflow
     namespace: mlflow-ns
     create_namespace: true
+    force: true
     values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
