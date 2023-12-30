@@ -1,4 +1,9 @@
 ---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - command:
+        cmd: vagrant up
 - hosts: db_nodes
   become: true
   gather_facts: false
@@ -16,7 +21,7 @@
   roles:
     - k3s-server
 - hosts: worker_nodes
-  strategy: frees
+  strategy: free
   become: true
   gather_facts: false
   roles:
@@ -27,3 +32,4 @@
   roles:
     - minio
     - mlflow
+    - airflow
