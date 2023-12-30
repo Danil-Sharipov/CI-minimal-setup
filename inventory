@@ -8,12 +8,12 @@ vm2
 [db_nodes]
 vm3
 
+[master_nodes]
+vm1
+
 [k3s_nodes:children]
 master_nodes
 worker_nodes
-
-[master_nodes]
-vm1
 
 [all_nodes:children]
 k3s_nodes
