@@ -1,3 +1,10 @@
 #https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html
 #https://airflow.apache.org/docs/helm-chart/stable/index.html
 #надо ограничить ресурсы
+#возможно pvc
+dags:
+  gitSync:
+    enabled: true
+    repo: https://github.com/Danil-Sharipov/First_in_MLOps.git
+    branch: main
+    subPath: "dags"
