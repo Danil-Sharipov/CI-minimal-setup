@@ -23,6 +23,8 @@
     force: true
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+
 - copy:
     src: ingress.yaml
     dest: /tmp/ing.yaml
@@ -35,6 +37,8 @@
 - file:
     state: absent
     path: /tmp/ing.yml
+
+
 - name: 'Update /etc/host'
   block:
     - lineinfile:

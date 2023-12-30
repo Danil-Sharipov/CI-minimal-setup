@@ -23,7 +23,11 @@
       - openshift
       - pyyaml
       - kubernetes
+- stat:
+    path: '/usr/local/bin/k3s-install.sh'
+  register: check
 - name: 'Download k3s'
+  when: check.stat.exists == False
   get_url:
     url: https://get.k3s.io/
     dest: /usr/local/bin/k3s-install.sh

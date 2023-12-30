@@ -16,23 +16,6 @@
 
 
 
-- command:
-    cmd: kubectl get all -n airflow-ns
-  environment:
-    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-  register: check
-- debug:
-    msg: "{{ check.stdout }}"
-- command:
-    cmd: kubectl get ing -n airflow-ns
-  environment:
-    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-  register: check
-- debug:
-    msg: "{{ check.stdout }}"
-
-
-
 #
 #- copy:
 #    src: ingress.yaml
