@@ -75,6 +75,22 @@
     path: /tmp/ing.yml
 
 
+- stat:
+    path: '/usr/local/bin/k9s'
+  register: check
+- name: 'Download k9s'
+  when: check.stat.exists == False
+  block:
+    - shell: |
+        curl -s https://api.github.com/repos/derailed/k9s/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+      register: version
+
+    - unarchive:
+        src: "https://github.com/derailed/k9s/releases/download/{{ version.stdout }}/k9s_Linux_amd64.tar.gz"
+        dest: /usr/local/bin
+        remote_src: yes
+
+
 #- name: 'Get info'
 #  kubernetes.core.k8s_info:
 #    api_version: helm.cattle.io/v1
