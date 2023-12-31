@@ -47,6 +47,11 @@
     state: present
     name: "{{ db_name }}"
   become: true
+- name: "Create app database"
+  postgresql_db:
+    state: present
+    name: "{{ db_name2 }}"
+  become: true
 #  become_user: postgres
 #  become_method: enable
 

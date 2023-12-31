@@ -22,25 +22,6 @@ images:
     repository: redis
     tag: 7-bullseye
     pullPolicy: IfNotPresent
-airflow:
-  usersUpdate: true
-  users:
-    - username: admin
-      password: admin
-      role: Admin
-      email: admin@example.com
-      firstName: admin
-      lastName: admin
-  extraPipPackages:
-    - "airflow-exporter~=1.4.1"
-  config:
-    AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
-    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
-  persistence:
-    enabled: true
-    storageClass: default
-    accessMode: ReadOnlyMany
-    size: 1Gi
 workers:
   replicas: 1
 
@@ -67,14 +48,7 @@ scheduler:
     enabled: false
 postgresql:
   enabled: false
-#
-#externalDatabase:
-#  type: postgres
-#  host: 192.168.56.12
-#  port: 5432
-#  database: aiflow
-#  user: mlflow
-#  passwordSecretKey: mlflow
+
 data:
   metadataConnection:
     user: mlflow
@@ -83,3 +57,15 @@ data:
     host: 192.168.56.12
     port: 5432
     db: airflow
+    sslmode: disable
+
+webservers:
+  defaultUser:
+    enabled: true
+    role: Admin
+    username: admin
+    email: admin@example.com
+    firstName: admin
+    lastName: user
+    password: admin
+

@@ -18,6 +18,8 @@
     owner: root
     group: root
     mode: 0644
+
+# тут не оч работает
 - name: Enable and check K3s service
   systemd:
     name: k3s
