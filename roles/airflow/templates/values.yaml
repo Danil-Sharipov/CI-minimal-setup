@@ -65,14 +65,21 @@ scheduler:
     periodSeconds: 60
   waitForMigrations:
     enabled: false
-#postgresql:
-#  enabled: false
+postgresql:
+  enabled: false
 #
 #externalDatabase:
 #  type: postgres
 #  host: 192.168.56.12
 #  port: 5432
-#  database: mlflow
+#  database: aiflow
 #  user: mlflow
 #  passwordSecretKey: mlflow
-
+data:
+  metadataConnection:
+    user: mlflow
+    pass: mlflow
+    protocol: postgresql
+    host: 192.168.56.12
+    port: 5432
+    db: airflow
