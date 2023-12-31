@@ -5,3 +5,4 @@
 /terraform/.terraform/
 /venv/
 /for-debug/
+/roles/airflow/templates/values2.yaml

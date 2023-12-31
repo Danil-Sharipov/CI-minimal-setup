@@ -2,9 +2,60 @@
 #https://airflow.apache.org/docs/helm-chart/stable/index.html
 #надо ограничить ресурсы
 #возможно pvc
+
+airflowHome: /opt/airflow
+airflowVersion: "2.6.2"
+
+executor: KubernetesExecutor
 dags:
   gitSync:
     enabled: true
     repo: https://github.com/Danil-Sharipov/First_in_MLOps.git
     branch: main
     subPath: "dags"
+images:
+  airflow:
+    repository: apache/airflow
+    tag: "2.6.2"
+    pullPolicy: IfNotPresent
+  redis:
+    repository: redis
+    tag: 7-bullseye
+    pullPolicy: IfNotPresent
+airflow:
+  usersUpdate: true
+  users:
+    - username: admin
+      password: admin
+      role: Admin
+      email: admin@example.com
+      firstName: admin
+      lastName: admin
+  extraPipPackages:
+    - "airflow-exporter~=1.4.1"
+  config:
+    AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
+    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+  persistence:
+    enabled: true
+    storageClass: default
+    accessMode: ReadOnlyMany
+    size: 1Gi
+workers:
+  replicas: 1
+
+  resources:
+    requests:
+      memory: "2Gi"
+#postgresql:
+#  enabled: false
+#
+#externalDatabase:
+#  type: postgres
+#  host: 192.168.56.12
+#  port: 5432
+#  database: mlflow
+#  user: mlflow
+#  passwordSecretKey: mlflow
+flowers:
+  enabled: false
