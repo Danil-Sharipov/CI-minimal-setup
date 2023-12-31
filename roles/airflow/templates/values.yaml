@@ -47,6 +47,24 @@ workers:
   resources:
     requests:
       memory: "2Gi"
+
+scheduler:
+
+  # Кол-во реплик планировщика
+  replicas: 1
+
+  # Команда, которая будет выполняться для запуска планировщика
+  command: ~
+  args: ["bash", "-c", "exec airflow scheduler"]
+
+  # Параметры проверки состояния пода планировщика
+  livenessProbe:
+    initialDelaySeconds: 10
+    timeoutSeconds: 20
+    failureThreshold: 5
+    periodSeconds: 60
+  waitForMigrations:
+    enabled: false
 #postgresql:
 #  enabled: false
 #
@@ -57,5 +75,4 @@ workers:
 #  database: mlflow
 #  user: mlflow
 #  passwordSecretKey: mlflow
-flowers:
-  enabled: false
+
