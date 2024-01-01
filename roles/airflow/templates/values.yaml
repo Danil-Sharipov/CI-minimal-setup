@@ -1,46 +1,50 @@
-#https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html
-#https://airflow.apache.org/docs/helm-chart/stable/index.html
-#надо ограничить ресурсы
-#возможно pvc
-
 airflowHome: /opt/airflow
 airflowVersion: "2.6.2"
 
 executor: KubernetesExecutor
+
 dags:
   gitSync:
     enabled: true
     repo: https://github.com/Danil-Sharipov/First_in_MLOps.git
     branch: main
     subPath: "dags"
+
 images:
   airflow:
     repository: apache/airflow
     tag: "2.6.2"
     pullPolicy: IfNotPresent
+
   redis:
     repository: redis
     tag: 7-bullseye
     pullPolicy: IfNotPresent
+
 airflow:
   usersUpdate: true
+
   users:
-    - username: admin
-      password: admin
+    - username: {{ username }}
+      password: {{ password }}
       role: Admin
-      email: admin@example.com
-      firstName: admin
-      lastName: admin
+      email: {{ email }}
+      firstName: {{ firstName }}
+      lastName: {{ lastName }}
+
   extraPipPackages:
     - "airflow-exporter~=1.4.1"
+
   config:
     AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
     AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+
   persistence:
     enabled: true
     storageClass: default
     accessMode: ReadOnlyMany
     size: 1Gi
+
 workers:
   replicas: 1
 
@@ -49,41 +53,48 @@ workers:
       memory: "2Gi"
 
 scheduler:
-
-  # Кол-во реплик планировщика
+  
   replicas: 1
 
-  # Команда, которая будет выполняться для запуска планировщика
   command: ~
   args: ["bash", "-c", "exec airflow scheduler"]
 
-  # Параметры проверки состояния пода планировщика
   livenessProbe:
     initialDelaySeconds: 10
     timeoutSeconds: 20
     failureThreshold: 5
     periodSeconds: 60
+
   waitForMigrations:
     enabled: false
+
 postgresql:
   enabled: false
 
 data:
   metadataConnection:
-    user: mlflow
-    pass: mlflow
+    user: {{ user_db }}
+    pass: {{ pass }}
     protocol: postgresql
-    host: 192.168.56.12
+    host: {{ host }}
     port: 5432
-    db: airflow
+    db: {{ db }}
     sslmode: disable
 
 webservers:
   defaultUser:
     enabled: true
+    username: {{ username }}
+    password: {{ password }}
     role: Admin
-    username: admin
-    email: admin@example.com
-    firstName: admin
-    lastName: user
-    password: admin
+    email: {{ email }}
+    firstName: {{ firstName }}
+    lastName: {{ lastName }}
+
+#  allowPodLogReading: true
+#
+#logs:
+#
+#  persistence:
+#    enabled: true
+#    size: 1Gi

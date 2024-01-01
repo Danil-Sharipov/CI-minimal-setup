@@ -17,6 +17,8 @@
     values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  ignore_errors: yes
+
 - copy:
     src: ingress.yaml
     dest: /tmp/ing.yaml
