@@ -13,7 +13,7 @@
     create_namespace: true
     force: true
     update_repo_cache: True
-    wait: True
+#    wait: True
     values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
@@ -37,3 +37,4 @@
         insertbefore: BOF
         path: /etc/hosts
         line: "192.168.56.10 aiflow.com"
+
