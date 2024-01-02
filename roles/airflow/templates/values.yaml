@@ -90,11 +90,3 @@ webservers:
     email: {{ email }}
     firstName: {{ firstName }}
     lastName: {{ lastName }}
-
-  allowPodLogReading: true
-
-logs:
-
-  persistence:
-    enabled: true
-    size: 1Gi
