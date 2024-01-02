@@ -25,6 +25,13 @@
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
+# А зачем?
+#- name: "Get data"
+#  shell: |
+#    kubectl get secrets/myminio-tls -o jsonpath={.data} -n tenant-ns |jq -r '."private.key"' | base64 --decode > /tmp/key
+#    kubectl get secrets/myminio-tls -o jsonpath={.data} -n tenant-ns |jq -r '."public.crt"'  | base64 --decode > /tmp/cert
+#    kubectl create secret tls myminio-secret --cert=/tmp/cert --key=/tmp/key -n tenant-ns
+
 
 - copy:
     src: ingress.yaml

@@ -1,19 +1,28 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: airflow-webserver
   namespace: airflow-ns
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  rules:
-    - host: airflow.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: airflow-webserver
-                port:
-                  number: 8080
+  entryPoints:
+    - websecure
+  routes:
+    - match: PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: airflow-webserver
+          port: 8080
+      middlewares:
+        - name: website-http-to-https
+  tls:
+    secretName: myminio-tls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: website-http-to-https
+  namespace: tenant-ns
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true

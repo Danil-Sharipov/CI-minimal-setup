@@ -6,3 +6,7 @@
 /venv/
 /for-debug/
 /roles/airflow/templates/values2.yaml
+roles/k3s-server/files/nginx.conf
+/roles/minio/files/ingress-nginx.yaml
+roles/minio/files/ing.yaml
+/roles/minio/files/traefik.yaml
