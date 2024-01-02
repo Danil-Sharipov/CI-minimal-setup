@@ -91,10 +91,10 @@ webservers:
     firstName: {{ firstName }}
     lastName: {{ lastName }}
 
-#  allowPodLogReading: true
-#
-#logs:
-#
-#  persistence:
-#    enabled: true
-#    size: 1Gi
+  allowPodLogReading: true
+
+logs:
+
+  persistence:
+    enabled: true
+    size: 1Gi
