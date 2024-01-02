@@ -52,4 +52,8 @@
     - lineinfile:
         insertbefore: BOF
         path: /etc/hosts
-        line: "192.168.56.10 minio.com"
+        line: '{{ item }}'
+      with_items:
+        - '192.168.56.10 minio-console.com'
+        - '192.168.56.10 minio.com'
+        - '192.168.56.10 minio-hl.com'
