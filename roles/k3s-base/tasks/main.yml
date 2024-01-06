@@ -23,6 +23,7 @@
       - openshift
       - pyyaml
       - kubernetes
+      - boto3
 - stat:
     path: '/usr/local/bin/k3s-install.sh'
   register: check

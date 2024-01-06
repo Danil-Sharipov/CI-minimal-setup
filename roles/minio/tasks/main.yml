@@ -57,3 +57,20 @@
         - '192.168.56.10 minio-console.com'
         - '192.168.56.10 minio.com'
         - '192.168.56.10 minio-hl.com'
+# Необходимо отредактировать template 
+#- name: 'migrate'
+#  block:
+#    - name: 'migrate file'
+#      template:
+#        src: migrate.py.j2
+#        dest: '/tmp/migrate.py'
+#        owner: root
+#        group: root
+#        mode: 0644
+#    - name: 'python3 test'
+#      command:
+#        cmd: 'python3 /tmp/migrate.py'
+#    - name: 'delete migration script'
+#      file:
+#        state: absent
+#        path: /tmp/migrate.py
