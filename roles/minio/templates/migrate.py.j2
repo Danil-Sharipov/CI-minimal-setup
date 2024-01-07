@@ -1,12 +1,42 @@
-import boto3
-# from tqdm import tqdm
-# ackey,seckey = input().split()
-s3_client = boto3.client('s3',
-                         endpoint_url='http://minio.com',
-                         aws_access_key_id='{{ rootUser }}',
-                         aws_secret_access_key='{{ rootPassword }}')
+import pandas as pd
+import requests
+import json
+from datetime import datetime, timedelta
 
-bucket_name = '{{ defaultBuckets }}'
+def request(start,stop,base):
+    response = requests.get(f'{base}?from={start}')
+    response = json.loads(response.content)['candles']
+    data = response["data"]
+    yield data
+    if (temp:=data[-1][-1].split()[0]) != stop and temp != start:
+        yield from request(temp,stop,base)
 
-# Загрузка файла в бакет
-s3_client.upload_file('file.txt', bucket_name, 'txt.txt')
+def column(base):
+    response = requests.get(f'{base}?from=2024-01-01')
+    response = json.loads(response.content)['candles']
+    return response['columns']
+
+def make_csv():
+    start = '2014-01-01'
+    stop = datetime.today().strftime('%Y-%m-%d')
+    base = 'https://iss.moex.com/iss/engines/stock/markets/shares/securities/YNDX/candles.json'
+    data = request(start,stop,base)
+    columns = column(base)
+    df = pd.DataFrame(data = next(data), columns = columns)
+    for i in data:
+        df2 = pd.DataFrame(data = next(data), columns = columns)
+        df = pd.concat([df,df2]).drop_duplicates().reset_index(drop=True)
+    csv = df.to_csv(index=False).encode("utf-8")
+    return csv
+
+def dump_data_to_bucket(csv):
+
+    from minio import Minio
+    from io import BytesIO
+
+    df = pd.DataFrame(tweet_list)
+    csv = df.to_csv(index=False).encode("utf-8")
+
+    client = Minio("minio.com", access_key="{{ rootUser }}", secret_key='{{ rootPassword }}', secure=False)
+
+    client.put_object('{{ defaultBuckets }}', "start_yandex.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv")
