@@ -8,3 +8,6 @@ user_db: mlflow
 pass: mlflow
 host: 192.168.56.12
 db: airflow
+MINIO_BUCKET_NAME: mlflow-bucket
+MINIO_ROOT_USER: CxrzoH4Ye0Cgiwm1znpp
+MINIO_ROOT_PASSWORD: frASzoho4X76UbqWSIw7GHuTbQ5fmKT2sv3Qftml

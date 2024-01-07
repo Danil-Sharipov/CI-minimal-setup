@@ -37,4 +37,11 @@
         insertbefore: BOF
         path: /etc/hosts
         line: "192.168.56.10 aiflow.com"
+# docker build -- tag airflow-image:1.0.0
+# docker save --output airflow.tar airflow-image:1.0.0
+# docker rmi airflow-image:1.0.0
+# cp
+# sudo k3s ctr images import /path/to/airflow.tar
+# check: k3s ctr images ls | grep path/image
+
 
