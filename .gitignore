@@ -11,3 +11,5 @@ roles/k3s-server/files/nginx.conf
 roles/minio/files/ing.yaml
 /roles/minio/files/traefik.yaml
 .fleet/run.json
+/roles/airflow/files/airflow.tar
+/debug.yml

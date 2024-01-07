@@ -1,0 +1,38 @@
+---
+- hosts: localhost
+  strategy: debug
+  gather_facts: false
+  tasks:
+    - name: 'check if file exist'
+      stat:
+        path: ../../roles/airflow/files/airflow.tar
+      register: check
+    - name: 'Block'
+      when: check.stat.exists == False
+      block:
+        - name: 'Build an image'
+          community.docker.docker_image:
+            build:
+              path: .
+            name: airflow-image
+            tag: 1.0.0
+            source: build
+            archive_path: airflow.tar
+        - name: Remove image
+          community.docker.docker_image:
+            state: absent
+            name: airflow-image
+            tag: 1.0.0
+        - name: Remove image
+          community.docker.docker_image:
+            state: absent
+            name: apache/airflow
+            tag: latest
+        - name: 'Copy'
+          copy:
+            src: ./airflow.tar
+            dest: ../../roles/airflow/files/airflow.tar
+        - name: 'Delete tar file'
+          file:
+            path: ./airflow.tar
+            state: absent

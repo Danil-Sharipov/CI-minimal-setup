@@ -5,6 +5,11 @@
 - Mlflow
 - Minio
 - Postgresql
+
+## Установка collections
+```bash
+ansible-galaxy install -r collections/requirements.yml 
+```
 ## Развертка стэнда
 ```bash
 ansible-playbook main.yml
@@ -15,6 +20,7 @@ ansible-playbook main.yml
 Для простоты воспользуемся UI AIRFLOW:
 ![alt text](./screenshots/1.png)
 ![alt text](./screenshots/2.png)
+- ### Работа с minio api 
 - ### ~~Дописать~~
 ## Мониторинг
 ## Тестирование
