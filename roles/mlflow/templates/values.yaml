@@ -2,7 +2,7 @@ backendStore:
   databaseMigration: true
   postgres:
     enabled: true
-    host: "{{ host }}"
+    host: "{{ host_db }}"
     port: 5432
     database: "{{ db_name }}"
     user: "{{ db_user }}"
@@ -10,11 +10,11 @@ backendStore:
 artifactRoot:
   s3:
     enabled: true
-    bucket: '{{ s3_bucket }}'
-    awsAccessKeyId: '{{ s3_user }}'
-    awsSecretAccessKey: '{{ s3_password }}'
+    bucket: '{{ MINIO_BUCKET_NAME }}'
+    awsAccessKeyId: '{{ MINIO_ROOT_USER }}'
+    awsSecretAccessKey: '{{ MINIO_ROOT_PASSWORD }}'
 # correct this
 extraEnvVars:
-  MLFLOW_S3_ENDPOINT_URL: http://minio.com/api
+  MLFLOW_S3_ENDPOINT_URL: http://minio.com
 serviceMonitor:
   enabled: true

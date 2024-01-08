@@ -1,10 +1,10 @@
 secrets:
   name: myminio-env-configuration
-  accessKey: "{{ rootUser }}"
-  secretKey: "{{ rootPassword }}"
+  accessKey: "{{ MINIO_ROOT_USER }}"
+  secretKey: "{{ MINIO_ROOT_PASSWORD }}"
 tenant:
   buckets:  
-    - name: {{ defaultBuckets }}
+    - name: {{ MINIO_BUCKET_NAME }}
   pools:
     - servers: 1
       name: pool-0

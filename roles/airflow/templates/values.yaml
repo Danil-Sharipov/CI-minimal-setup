@@ -73,12 +73,12 @@ postgresql:
 
 data:
   metadataConnection:
-    user: {{ user_db }}
-    pass: {{ pass }}
+    user: {{ db_user }}
+    pass: {{ db_password }}
     protocol: postgresql
-    host: {{ host }}
+    host: {{ host_db }}
     port: 5432
-    db: {{ db }}
+    db: {{ db_name2 }}
     sslmode: disable
 
 webservers:

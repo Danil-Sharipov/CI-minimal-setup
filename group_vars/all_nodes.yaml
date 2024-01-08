@@ -1,0 +1,6 @@
+---
+db_user: flow
+db_password: flow
+db_name: mlflow
+db_name2: airflow
+host_db: 192.168.56.12

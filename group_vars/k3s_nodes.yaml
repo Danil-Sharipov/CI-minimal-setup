@@ -1,0 +1,7 @@
+---
+MINIO_BUCKET_NAME: airflow-bucket
+MINIO_ROOT_USER: CxrzoH4Ye0Cgiwm1znpp
+MINIO_ROOT_PASSWORD: frASzoho4X76UbqWSIw7GHuTbQ5fmKT2sv3Qftml
+host_master: 192.168.56.10
+systemd_dir: "/etc/systemd/system"
+token: 'my_token'
