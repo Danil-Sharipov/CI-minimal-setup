@@ -65,20 +65,19 @@
       - requests
       - pandas
 
-
 - name: 'migrate'
   block:
     - name: 'migrate file'
       template:
         src: migrate.py.j2
-        dest: '/tmp/migrate.py'
+        dest: '/tmp/mini.py'
         owner: root
         group: root
         mode: 0644
     - name: 'python3 test'
       command:
-        cmd: 'python3 /tmp/migrate.py'
+        cmd: 'python3 /tmp/mini.py'
     - name: 'delete migration script'
       file:
         state: absent
-        path: /tmp/migrate.py
+        path: '/tmp/mini.py'

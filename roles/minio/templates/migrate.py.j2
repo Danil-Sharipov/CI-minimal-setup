@@ -2,7 +2,9 @@ import pandas as pd
 import requests
 import json
 from datetime import datetime, timedelta
+from multiprocessing import Pool
 
+base = 'https://iss.moex.com/iss/engines/stock/markets/shares/securities/YNDX/candles.json'
 def request(start,stop,base):
     response = requests.get(f'{base}?from={start}')
     response = json.loads(response.content)['candles']
@@ -19,24 +21,28 @@ def column(base):
 def make_csv():
     start = '2014-01-01'
     stop = datetime.today().strftime('%Y-%m-%d')
-    base = 'https://iss.moex.com/iss/engines/stock/markets/shares/securities/YNDX/candles.json'
     data = request(start,stop,base)
-    columns = column(base)
-    df = pd.DataFrame(data = next(data), columns = columns)
-    for i in data:
-        df2 = pd.DataFrame(data = next(data), columns = columns)
-        df = pd.concat([df,df2]).drop_duplicates().reset_index(drop=True)
+
+    df = make_df(next(data))
+
+    with Pool(32) as p:
+        for i in p.map(make_df, data):
+            df = pd.concat([df,i]).drop_duplicates().reset_index(drop=True)
     csv = df.to_csv(index=False).encode("utf-8")
     return csv
+
+def make_df(data):
+    columns = column(base)
+    return pd.DataFrame(data = data, columns = columns)
+
 
 def dump_data_to_bucket(csv):
 
     from minio import Minio
     from io import BytesIO
 
-    df = pd.DataFrame(tweet_list)
-    csv = df.to_csv(index=False).encode("utf-8")
+    client = Minio("minio.com", access_key="{{ MINIO_ROOT_USER }}", secret_key='{{ MINIO_ROOT_PASSWORD }}', secure=False)
 
-    client = Minio("minio.com", access_key="{{ rootUser }}", secret_key='{{ rootPassword }}', secure=False)
+    client.put_object('{{ MINIO_BUCKET_NAME }}', "start_yandex2.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv")
 
-    client.put_object('{{ defaultBuckets }}', "start_yandex.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv")
+dump_data_to_bucket(make_csv())
