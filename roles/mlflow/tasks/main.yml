@@ -36,4 +36,4 @@
     - lineinfile:
         insertbefore: BOF
         path: /etc/hosts
-        line: "192.168.56.10 mlflow.com"
+        line: "{{ host_master }} mlflow.com"

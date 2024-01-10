@@ -54,9 +54,9 @@
         path: /etc/hosts
         line: '{{ item }}'
       with_items:
-        - '192.168.56.10 minio-console.com'
-        - '192.168.56.10 minio.com'
-        - '192.168.56.10 minio-hl.com'
+        - '{{ host_master }} minio-console.com'
+        - '{{ host_master }} minio.com'
+        - '{{ host_master }} minio-hl.com'
 
 - name: install pre-requisites
   pip:

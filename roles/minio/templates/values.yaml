@@ -5,6 +5,7 @@ secrets:
 tenant:
   buckets:  
     - name: {{ MINIO_BUCKET_NAME }}
+    - name: {{ MINIO_SECOND_BUCKET_NAME }}
   pools:
     - servers: 1
       name: pool-0

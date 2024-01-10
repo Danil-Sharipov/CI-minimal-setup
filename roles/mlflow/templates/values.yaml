@@ -10,7 +10,7 @@ backendStore:
 artifactRoot:
   s3:
     enabled: true
-    bucket: '{{ MINIO_BUCKET_NAME }}'
+    bucket: '{{ MINIO_SECOND_BUCKET_NAME }}'
     awsAccessKeyId: '{{ MINIO_ROOT_USER }}'
     awsSecretAccessKey: '{{ MINIO_ROOT_PASSWORD }}'
 # correct this
