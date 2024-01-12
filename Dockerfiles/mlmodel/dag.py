@@ -2,14 +2,10 @@ import pandas as pd
 
 def get_data():
    from minio import Minio
-
    access_key = "airflow"
    secret_key = 'airflowpass'
    bucket = "mlflow"
-   
-   
    client = Minio("127.0.0.1:9000", access_key=access_key, secret_key=secret_key, secure=False)
-   
    objects = client.list_objects(bucket)
    df = None
    for i in objects:
