@@ -13,3 +13,4 @@ roles/minio/files/ing.yaml
 .fleet/run.json
 /roles/airflow/files/airflow.tar
 /debug.yml
+Dockerfiles/mlmodel/model/__pycache__
