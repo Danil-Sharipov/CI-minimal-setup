@@ -1,14 +1,18 @@
 from flask import Flask, request, jsonify
-import numpy as np
-from add import main as m
+from forecast import main, predict
 
 app = Flask(__name__)
 
 @app.route('/add', methods = ['POST'])
 def add():
     data = request.get_json(force=True)
-    print(m(data))
+    main(data)
     return 'True'
+
+@app.route('/predict', methods = ['POST'])
+def prediction():
+    data = request.get_json(force=True)
+    return jsonify(data=predict(data))
     
     
 

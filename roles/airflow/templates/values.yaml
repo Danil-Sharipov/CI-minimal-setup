@@ -97,3 +97,5 @@ env:
     value: "{{ MINIO_ROOT_USER }}"
   - name: "MINIO_ROOT_PASSWORD"
     value: "{{ MINIO_ROOT_PASSWORD }}"
+  - name: "MINIO_SECOND_BUCKET_NAME"
+    value: "{{ MINIO_SECOND_BUCKET_NAME }}"

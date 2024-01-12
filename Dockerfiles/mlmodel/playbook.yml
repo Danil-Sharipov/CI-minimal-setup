@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  strategy: debug
+  gather_facts: false
+  tasks:
+    - name: 'check if file exist'
+      stat:
+        path: ./project.tar
+      register: check
+    - name: 'Block'
+      when: check.stat.exists == False
+      block:
+        - name: 'Build an image'
+          community.docker.docker_image:
+            build:
+              path: .
+            name: project
+            tag: v1
+            source: build
+            archive_path: project.tar
+        - name: Remove image
+          community.docker.docker_image:
+            state: absent
+            name: project
+            tag: v1

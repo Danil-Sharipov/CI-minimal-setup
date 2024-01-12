@@ -2,3 +2,8 @@ flask
 numpy
 pandas
 statsmodels
+gluonts
+mxnet==1.6.0
+pytorch-lightning
+pathlib
+numpy
