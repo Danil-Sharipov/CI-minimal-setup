@@ -1,16 +1,11 @@
 
 .idea
 /.vagrant/
-/just-for-me.md
 /terraform/.terraform/
 /venv/
 /for-debug/
-/roles/airflow/templates/values2.yaml
-roles/k3s-server/files/nginx.conf
-/roles/minio/files/ingress-nginx.yaml
-roles/minio/files/ing.yaml
-/roles/minio/files/traefik.yaml
-.fleet/run.json
-/roles/airflow/files/airflow.tar
-/debug.yml
-Dockerfiles/mlmodel/model/__pycache__
+mlmodel/model/__pycache__
+.fleet
+debug.yml
+just-for-me.md
+airflow.tar
