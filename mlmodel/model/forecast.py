@@ -14,8 +14,8 @@ def main(json):
         create(df)
 
 def create(df):
-    train = df.loc[df['end'] < '2021-01-01']
-    valid = df.loc[df['end'] >= '2021-01-01']
+    train = df.loc[df['end'] < '2023-01-01']
+    valid = df.loc[df['end'] >= '2023-01-01']
 
     train_ds = PandasDataset.from_long_dataframe(train, target='target', item_id='ident',
                                                  timestamp='end', freq='D')

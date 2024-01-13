@@ -18,8 +18,9 @@ def get_data():
    for i in objects:
       obj = client.get_object(
          bucket,
-         f"{i._object_name}",
-      )
+         i._object_name)
+      minio.remove_object(bucket,
+                          i._object_name)
       temp = pd.read_csv(obj)
       if df is None:
          df = temp
