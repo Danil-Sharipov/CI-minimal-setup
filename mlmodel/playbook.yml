@@ -3,10 +3,12 @@
   strategy: debug
   gather_facts: false
   tasks:
+
     - name: 'check if file exist'
       stat:
         path: ./project.tar
       register: check
+
     - name: 'Block'
       when: check.stat.exists == False
       block:
@@ -18,8 +20,45 @@
             tag: v1
             source: build
             archive_path: project.tar
+
         - name: Remove image
           community.docker.docker_image:
             state: absent
             name: project
             tag: v1
+
+
+- hosts: master_nodes
+  strategy: debug
+  gather_facts: false
+  tasks:
+    - name: 'Image install'
+      block:
+        - name: 'Copy file'
+          copy:
+            src: project.tar
+            dest: /tmp/project.tar
+
+        - command:
+            cmd: k3s ctr images import /tmp/project.tar
+    - copy:
+        src: ingress.yaml
+        dest: /tmp/manifest.yaml
+
+    - name: 'Apply manifest to the cluster'
+      kubernetes.core.k8s:
+        state: present
+        src: /tmp/manifest.yaml
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - file:
+        state: absent
+        path: /tmp/manifest.yml
+
+    - name: 'Update /etc/host'
+      block:
+        - lineinfile:
+            insertbefore: BOF
+            path: /etc/hosts
+            line: "{{ host_master }} ml.com"

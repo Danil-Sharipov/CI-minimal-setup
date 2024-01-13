@@ -44,5 +44,6 @@ def dump_data_to_bucket(csv):
     client = Minio("minio.com", access_key="{{ MINIO_ROOT_USER }}", secret_key='{{ MINIO_ROOT_PASSWORD }}', secure=False)
 
     client.put_object('{{ MINIO_BUCKET_NAME }}', "start_yandex2.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv")
+    client.put_object('{{ MINIO_SECOND_BUCKET_NAME }}', "start_yandex2.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv")
 
 dump_data_to_bucket(make_csv())
