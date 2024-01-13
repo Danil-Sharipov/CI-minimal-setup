@@ -45,6 +45,10 @@ def dump_data_to_bucket(csv):
     client.put_object(
         MINIO_BUCKET_NAME, f"{datetime.today().strftime('%Y-%m-%d-%H-%M-%S')}_yandex.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv"
     )
+    MINIO_BUCKET_NAME = os.getenv("MINIO_SECOND_BUCKET_NAME")
+    client.put_object(
+        MINIO_BUCKET_NAME, f"{datetime.today().strftime('%Y-%m-%d-%H-%M-%S')}_yandex.csv", data=BytesIO(csv), length=len(csv), content_type="application/csv"
+    )
 
 @dag(
     schedule="@daily",
