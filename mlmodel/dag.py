@@ -25,6 +25,7 @@ def get_data():
    return df
 
 def transform_data(df):
+   df.drop(columns=['begin'],inplace=True)
    df['end'] = pd.to_datetime(df['end'],format='%Y-%m-%d %H:%M:%S')
    df.set_index('end',inplace=True)
    df = df.resample('D').mean().interpolate().reset_index()
