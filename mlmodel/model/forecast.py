@@ -4,14 +4,10 @@ from os import mkdir
 from gluonts.dataset.pandas import PandasDataset
 from gluonts.mx.model.deepar import DeepAREstimator
 from gluonts.trainer import Trainer
-import numpy as np
 from pathlib import Path
-import optuna
-import torch
 import mlflow
-from gluonts.evaluation import make_evaluation_predictions
-from gluonts.evaluation import Evaluator
-from gluonts.dataset.field_names import FieldName
+# from gluonts.evaluation import make_evaluation_predictions
+# from gluonts.evaluation import Evaluator
 
 def main(json):
     df = pd.DataFrame.from_dict(json,orient='index')
